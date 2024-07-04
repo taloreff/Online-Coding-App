@@ -1,18 +1,16 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import AppHeader from './assets/css/cmps/AppHeader';
-import Lobby from './assets/css/pages/Lobby';
-import CodeBlockIndex from './assets/css/pages/CodeBlockIndex';
+import AppHeader from './cmps/AppHeader';
+import Lobby from './pages/Lobby';
+import CodeBlockIndex from './pages/CodeBlockIndex';
 
 function App() {
   return (
     <Router>
       <AppHeader />
-      <main className='container'>
-        <Routes>
-          <Route path='/' element={<Lobby />} />
-          <Route path="/codeBlock/:id" element={<CodeBlockIndex />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path='/' element={<Lobby />} />
+        <Route path="/codeBlock/:id" element={<CodeBlockIndex />} />
+      </Routes>
     </Router>
   )
 }
