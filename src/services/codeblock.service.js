@@ -8,7 +8,6 @@ const BASE_URL = process.env.NODE_ENV === 'production'
 export const getCodeblocks = async () => {
     try {
         const response = await axios.get(BASE_URL);
-        console.log('response.data:', response.data)
         return response.data;
     } catch (error) {
         console.error('Error fetching codeblocks:', error);

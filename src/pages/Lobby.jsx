@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getCodeblocks } from "../services/codeblock.service";
-import { Link } from "react-router-dom";
+import CodeblockList from "../cmps/CodeblockList";
 
 export default function Lobby() {
-    const [codeblocks, setCodeblocks] = useState([]);
+    const [codeblocks, setCodeblocks] = useState(null);
 
     useEffect(() => {
         fetchCodeblocks();
@@ -14,16 +14,19 @@ export default function Lobby() {
         setCodeblocks(codeblocksData);
     };
 
+    // const user = {
+    //     name: "John",
+    //     socketid: "123",
+    //     id: "1234",
+    //     favorites: ["1234", "5678"],
+    //     done: ["1234"], //how long it took to solve
+    // };
+
+
     return (
-        <main className="container">
+        <main className="container" role="main">
             <h1>Choose code block</h1>
-            <ul className="lobby-list">
-                {codeblocks.map(codeblock => (
-                    <Link to={`/codeBlock/${codeblock._id}`} key={codeblock._id} className="lobby-link">
-                        {codeblock.title}
-                    </Link>
-                ))}
-            </ul>
+            <CodeblockList codeblocks={codeblocks} />
         </main>
     );
 }

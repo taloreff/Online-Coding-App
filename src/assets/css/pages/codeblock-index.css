@@ -44,6 +44,10 @@
     border-radius: 5px;
 }
 
+/* .codeblock {
+    border: 1px solid rgb(32, 214, 32)
+} */
+
 .codeblock .code-textarea:focus {
     outline: none;
 }
