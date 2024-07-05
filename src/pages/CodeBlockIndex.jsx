@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import 'highlight.js/styles/vs2015.css';
+import smiley from '../assets/imgs/smiley.png';
 
 hljs.registerLanguage('javascript', javascript);
 
@@ -28,10 +29,20 @@ export default function CodeBlockIndex() {
         setCodeblock(newCodeblock);
     }
 
-    function submitCode() {
-        setIsEditing(false);
-        alert("Code submitted!")
+    function stripCommentsAndWhitespace(code) {
+        return code
+            .replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '') // Remove single-line and multi-line comments
+            .replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            .trim(); // Trim leading and trailing whitespace
     }
+
+    const isCodeCorrect = () => {
+        if (!codeblock) return false;
+        const strippedCode = stripCommentsAndWhitespace(codeblock.code);
+        const strippedSolution = stripCommentsAndWhitespace(codeblock.solution);
+        return strippedCode === strippedSolution;
+    }
+
     return (
         <main className="container">
             <h1>{codeblock ? codeblock.title : 'Loading...'}</h1>
@@ -45,7 +56,6 @@ export default function CodeBlockIndex() {
                                 className="code-textarea"
                             >
                             </textarea>
-                            <button onClick={submitCode}>Submit</button>
                         </>
                     ) : (
                         <pre>
@@ -55,6 +65,7 @@ export default function CodeBlockIndex() {
                         </pre>
                     )}
                 </section>}
+            {isCodeCorrect() && <div className="smiley" ><img src={smiley} /><h1>Well done!</h1></div>}
         </main>
     )
 }
