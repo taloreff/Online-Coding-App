@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react"
-import { getCodeblocks } from "../services/codeblock.service"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { getCodeblocks } from "../services/codeblock.service";
+import { Link } from "react-router-dom";
 
 export default function Lobby() {
-
-    const [codeblocks, setCodeblocks] = useState([])
+    const [codeblocks, setCodeblocks] = useState([]);
 
     useEffect(() => {
-        fetchCodeblocks()
-    }, [])
+        fetchCodeblocks();
+    }, []);
 
     const fetchCodeblocks = async () => {
-        const codeblocksData = await getCodeblocks()
-        setCodeblocks(codeblocksData)
-    }
+        const codeblocksData = await getCodeblocks();
+        setCodeblocks(codeblocksData);
+    };
 
     return (
         <main className="lobby-container">
             <h1>Choose code block</h1>
-            <ul>
+            <ul className="lobby-list">
                 {codeblocks.map(codeblock => (
-                    <li key={codeblock._id}>
-                        <Link to={`/${codeblock._id}`}>{codeblock.title}</Link>
-                    </li>
+                    <Link to={`/codeBlock/${codeblock._id}`} key={codeblock._id} className="lobby-link">
+                        {codeblock.title}
+                    </Link>
                 ))}
             </ul>
         </main>
-    )
+    );
 }
