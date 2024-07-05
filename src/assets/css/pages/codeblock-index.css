@@ -1,0 +1,41 @@
+.codeblock {
+    display: flex;
+    flex-grow: 3;
+    padding: 10px 20px;
+    background-color: #282c34;
+    border-radius: 8px;
+    width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.codeblock pre,
+.codeblock .code-textarea {
+    margin: 0;
+    width: 100%;
+    background-color: #282c34;
+    border: none;
+    color: #abb2bf;
+    flex-grow: 1;
+}
+
+.codeblock .code-textarea:focus {
+    outline: none;
+}
+
+.codeblock button {
+    background-color: #61afef;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.codeblock code {
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
