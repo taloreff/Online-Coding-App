@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
 import { getCodeblockById } from "../services/codeblock.service";
 import { useParams } from "react-router-dom";
-import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-import 'highlight.js/styles/vs2015.css';
 import smiley from '../assets/imgs/smiley.png';
-
-hljs.registerLanguage('javascript', javascript);
+import { SolutionModal } from '../cmps/SolutionModal';
 
 export default function CodeBlockIndex() {
     const [codeblock, setCodeblock] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
+    const [showSmiley, setShowSmiley] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const { id } = useParams();
-
 
     useEffect(() => {
         fetchCodeblock();
     }, [id]);
 
+    useEffect(() => {
+        const handleClick = () => setShowSmiley(false);
+        document.addEventListener('click', handleClick);
+
+        return () => {
+            document.removeEventListener('click', handleClick);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (codeblock && codeblock.code === codeblock.solution) {
+            setShowSmiley(true);
+        }
+    }, [codeblock]);
+
     async function fetchCodeblock() {
-        const codeblockData = await getCodeblockById(id)
+        const codeblockData = await getCodeblockById(id);
         setCodeblock(codeblockData);
     }
 
@@ -29,24 +41,13 @@ export default function CodeBlockIndex() {
         setCodeblock(newCodeblock);
     }
 
-    function stripCommentsAndWhitespace(code) {
-        return code
-            .replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '') // Remove single-line and multi-line comments
-            .replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
-            .trim(); // Trim leading and trailing whitespace
-    }
-
-    const isCodeCorrect = () => {
-        if (!codeblock) return false;
-        const strippedCode = stripCommentsAndWhitespace(codeblock.code);
-        const strippedSolution = stripCommentsAndWhitespace(codeblock.solution);
-        return strippedCode === strippedSolution;
-    }
-
     return (
         <main className="container">
+            <div className="button-container">
+                <button className="solution-button" onClick={() => setShowModal(true)}>Solution</button>
+            </div>
             <h1>{codeblock ? codeblock.title : 'Loading...'}</h1>
-            {codeblock &&
+            {codeblock && (
                 <section className="codeblock" onClick={() => setIsEditing(true)}>
                     {isEditing ? (
                         <>
@@ -54,8 +55,7 @@ export default function CodeBlockIndex() {
                                 value={codeblock.code}
                                 onChange={handleCodeChange}
                                 className="code-textarea"
-                            >
-                            </textarea>
+                            />
                         </>
                     ) : (
                         <pre>
@@ -64,8 +64,20 @@ export default function CodeBlockIndex() {
                             </code>
                         </pre>
                     )}
-                </section>}
-            {isCodeCorrect() && <div className="smiley" ><img src={smiley} /><h1>Well done!</h1></div>}
+                </section>
+            )}
+            {showSmiley && (
+                <div className="smiley">
+                    <img src={smiley} alt="Smiley" />
+                    <h1>Well done!</h1>
+                </div>
+            )}
+            {showModal && (
+                <SolutionModal
+                    solution={codeblock.solution}
+                    onClose={() => setShowModal(false)}
+                />
+            )}
         </main>
-    )
+    );
 }

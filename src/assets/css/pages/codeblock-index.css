@@ -11,6 +11,27 @@
     position: relative;
 }
 
+.button-container {
+    align-self: flex-start;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.solution-button {
+    padding: 10px 20px;
+    background-color: #8caecd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.solution-button:hover {
+    background-color: #5a7a9d;
+}
+
 .codeblock pre,
 .codeblock .code-textarea {
     margin: 0;
