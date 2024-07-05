@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getCodeblockById } from "../services/codeblock.service";
 import { useParams } from "react-router-dom";
-import smiley from '../assets/imgs/smiley.png';
-import { SolutionModal } from '../cmps/SolutionModal';
+import { CodeEditor } from '../cmps/codeblockdetails/CodeEditor';
+import { Smiley } from '../cmps/codeblockdetails/Smiley';
+import { SolutionBtn } from '../cmps/codeblockdetails/SolutionBtn';
+import { SolutionModal } from '../cmps/codeblockdetails/SolutionModal';
 
-export default function CodeBlockIndex() {
+export default function CodeblockDetails() {
     const [codeblock, setCodeblock] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [showSmiley, setShowSmiley] = useState(false);
@@ -43,35 +45,17 @@ export default function CodeBlockIndex() {
 
     return (
         <main className="container">
-            <div className="button-container">
-                <button className="solution-button" onClick={() => setShowModal(true)}>Solution</button>
-            </div>
+            <SolutionBtn onClick={() => setShowModal(true)} />
             <h1>{codeblock ? codeblock.title : 'Loading...'}</h1>
             {codeblock && (
-                <section className="codeblock" onClick={() => setIsEditing(true)}>
-                    {isEditing ? (
-                        <>
-                            <textarea
-                                value={codeblock.code}
-                                onChange={handleCodeChange}
-                                className="code-textarea"
-                            />
-                        </>
-                    ) : (
-                        <pre>
-                            <code className="javascript">
-                                {codeblock.code}
-                            </code>
-                        </pre>
-                    )}
-                </section>
+                <CodeEditor
+                    code={codeblock.code}
+                    isEditing={isEditing}
+                    onCodeChange={handleCodeChange}
+                    onToggleEditing={() => setIsEditing(!isEditing)}
+                />
             )}
-            {showSmiley && (
-                <div className="smiley">
-                    <img src={smiley} alt="Smiley" />
-                    <h1>Well done!</h1>
-                </div>
-            )}
+            {showSmiley && <Smiley />}
             {showModal && (
                 <SolutionModal
                     solution={codeblock.solution}

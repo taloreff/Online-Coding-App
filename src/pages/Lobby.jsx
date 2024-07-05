@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCodeblocks } from "../services/codeblock.service";
-import CodeblockList from "../cmps/CodeblockList";
+import CodeblockList from "../cmps/lobby/CodeblockList";
 
 export default function Lobby() {
     const [codeblocks, setCodeblocks] = useState(null);

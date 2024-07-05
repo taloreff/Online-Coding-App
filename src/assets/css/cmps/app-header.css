@@ -3,10 +3,21 @@
     background: linear-gradient(90deg, #9fc2e2, #437484);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     color: white;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     text-decoration: none;
 }
 
 .header .header-title {
     font-size: 24px;
     font-weight: 400;
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.search-bar-container {
+    grid-column: 2;
+    justify-self: center;
 }
