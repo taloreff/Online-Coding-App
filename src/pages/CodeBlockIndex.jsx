@@ -1,5 +1,7 @@
 export default function CodeBlockIndex() {
     return (
-        <div>CodeBlockIndex</div>
+        <main className="container">
+
+        </main>
     )
 }

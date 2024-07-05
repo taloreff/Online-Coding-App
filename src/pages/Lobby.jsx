@@ -15,7 +15,7 @@ export default function Lobby() {
     };
 
     return (
-        <main className="lobby-container">
+        <main className="container">
             <h1>Choose code block</h1>
             <ul className="lobby-list">
                 {codeblocks.map(codeblock => (
