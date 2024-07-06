@@ -1,8 +1,9 @@
 import React from 'react';
 
-export function CodeEditor({ code, isEditing, onCodeChange, onToggleEditing }) {
+export function CodeEditor({ code, isEditing, onCodeChange, onSetIsEditing }) {
+
     return (
-        <section className="codeblock" onClick={onToggleEditing}>
+        <section className={`codeblock ${isEditing ? 'focused' : ''}`} onClick={onSetIsEditing}>
             {isEditing ? (
                 <textarea
                     value={code}

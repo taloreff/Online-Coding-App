@@ -20,6 +20,11 @@ h1 {
     margin: 0;
 }
 
+textarea {
+    resize: none;
+
+}
+
 .container {
     padding: 0 100px;
     display: flex;

@@ -9,6 +9,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
     position: relative;
+    min-height: 500px;
 }
 
 .button-container {
@@ -42,14 +43,16 @@
     flex-grow: 1;
     padding: 10px;
     border-radius: 5px;
-}
+    font-size: 14px;
 
-/* .codeblock {
-    border: 1px solid rgb(32, 214, 32)
-} */
+}
 
 .codeblock .code-textarea:focus {
     outline: none;
+}
+
+.codeblock.focused {
+    border: 1px solid rgb(82, 186, 82);
 }
 
 .codeblock code {

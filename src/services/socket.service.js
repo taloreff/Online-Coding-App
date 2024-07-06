@@ -8,6 +8,7 @@ export const SOCKET_EVENT_CODE_UPDATE = 'code-update'
 export const SOCKET_REDIRECT_TO_LOBBY = 'redirect-to-lobby'
 export const SOCKET_GET_STUDENTS_COUNT = 'get-students-count'
 export const SOCKET_STUDENTS_COUNT = 'students-count'
+export const SOCKET_EVENT_SET_ROLE = 'set-role';
 
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/codeblocks'

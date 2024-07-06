@@ -6,7 +6,7 @@ import { Smiley } from '../cmps/codeblockdetails/Smiley';
 import { SolutionBtn } from '../cmps/codeblockdetails/SolutionBtn';
 import { SolutionModal } from '../cmps/codeblockdetails/SolutionModal';
 import { RedirectModal } from '../cmps/codeblockdetails/RedirectModal';
-import { socketService, SOCKET_EVENT_JOIN_CODEBLOCK, SOCKET_EVENT_LEAVE_CODEBLOCK, SOCKET_EVENT_CODE_CHANGE, SOCKET_EVENT_CODE_UPDATE, SOCKET_REDIRECT_TO_LOBBY, SOCKET_GET_STUDENTS_COUNT, SOCKET_STUDENTS_COUNT } from '../services/socket.service';
+import { socketService, SOCKET_EVENT_JOIN_CODEBLOCK, SOCKET_EVENT_LEAVE_CODEBLOCK, SOCKET_EVENT_CODE_CHANGE, SOCKET_EVENT_CODE_UPDATE, SOCKET_REDIRECT_TO_LOBBY, SOCKET_GET_STUDENTS_COUNT, SOCKET_STUDENTS_COUNT, SOCKET_EVENT_SET_ROLE } from '../services/socket.service';
 
 export default function CodeblockDetails() {
     const [codeblock, setCodeblock] = useState(null);
@@ -23,7 +23,7 @@ export default function CodeblockDetails() {
         fetchCodeblock();
         socketService.emit(SOCKET_EVENT_JOIN_CODEBLOCK, id);
         socketService.emit(SOCKET_GET_STUDENTS_COUNT, id);
-        socketService.on('set-role', (role) => {
+        socketService.on(SOCKET_EVENT_SET_ROLE, (role) => {
             setUserRole(role);
         });
 
@@ -104,7 +104,7 @@ export default function CodeblockDetails() {
                     code={codeblock.code}
                     isEditing={isEditing}
                     onCodeChange={handleCodeChange}
-                    onToggleEditing={() => setIsEditing(!isEditing)}
+                    onSetIsEditing={() => setIsEditing(true)}
                 />
             )}
             {showSmiley && <Smiley />}
