@@ -5,18 +5,20 @@ import { CodeEditor } from '../cmps/codeblockdetails/CodeEditor';
 import { Smiley } from '../cmps/codeblockdetails/Smiley';
 import { SolutionBtn } from '../cmps/codeblockdetails/SolutionBtn';
 import { SolutionModal } from '../cmps/codeblockdetails/SolutionModal';
-import { socketService, SOCKET_EVENT_JOIN_CODEBLOCK, SOCKET_EVENT_LEAVE_CODEBLOCK, SOCKET_EVENT_CODE_CHANGE, SOCKET_EVENT_CODE_UPDATE, SOCKET_REDIRECT_TO_LOBBY } from '../services/socket.service';
+import { socketService, SOCKET_EVENT_JOIN_CODEBLOCK, SOCKET_EVENT_LEAVE_CODEBLOCK, SOCKET_EVENT_CODE_CHANGE, SOCKET_EVENT_CODE_UPDATE, SOCKET_REDIRECT_TO_LOBBY, SOCKET_GET_STUDENTS_COUNT, SOCKET_STUDENTS_COUNT } from '../services/socket.service';
 
 export default function CodeblockDetails() {
     const [codeblock, setCodeblock] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [showSmiley, setShowSmiley] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [studentCount, setStudentCount] = useState(0);
     const { id } = useParams();
 
     useEffect(() => {
         fetchCodeblock();
         socketService.emit(SOCKET_EVENT_JOIN_CODEBLOCK, id);
+        socketService.emit(SOCKET_GET_STUDENTS_COUNT, id);
         return () => {
             socketService.emit(SOCKET_EVENT_LEAVE_CODEBLOCK, id);
         };
@@ -55,6 +57,15 @@ export default function CodeblockDetails() {
         };
     }, []);
 
+    useEffect(() => {
+        socketService.on(SOCKET_STUDENTS_COUNT, (count) => {
+            setStudentCount(count);
+        });
+        return () => {
+            socketService.off(SOCKET_STUDENTS_COUNT);
+        };
+    }, []);
+
     async function fetchCodeblock() {
         const codeblockData = await codeblockService.getCodeblockById(id);
         setCodeblock(codeblockData);
@@ -71,6 +82,7 @@ export default function CodeblockDetails() {
         <main className="container">
             <SolutionBtn onClick={() => setShowModal(true)} />
             <h1>{codeblock ? codeblock.title : 'Loading...'}</h1>
+            <p>Students in room: {studentCount}</p>
             {codeblock && (
                 <CodeEditor
                     code={codeblock.code}
