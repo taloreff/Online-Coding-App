@@ -64,46 +64,19 @@
 
 .solution-button {
     padding: 10px 20px;
-    background-color: #8caecd;
+    background-color: #628ea3;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .solution-button:hover {
-    background-color: #5a7a9d;
-}
 
-.codeblock pre,
-.codeblock .code-textarea {
-    margin: 0;
-    width: 100%;
-    background-color: #282c34;
-    border: none;
-    color: #abb2bf;
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-
-}
-
-.codeblock .code-textarea:focus {
-    outline: none;
-}
-
-.codeblock.focused {
-    border: 1px solid rgb(82, 186, 82);
-}
-
-.codeblock code {
-    font-size: 14px;
-    white-space: pre-wrap;
-    word-break: break-all;
-    word-wrap: break-word;
+    background-color: #74a2b7;
 }
 
 @media screen and (max-width: 768px) {

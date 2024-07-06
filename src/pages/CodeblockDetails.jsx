@@ -92,6 +92,7 @@ export default function CodeblockDetails() {
                 <CodeEditor
                     code={codeblock.code}
                     onCodeChange={handleCodeChange}
+                    role={userRole}
                 />
             )}
             {showSmiley && <Smiley />}

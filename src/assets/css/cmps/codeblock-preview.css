@@ -7,7 +7,7 @@
     max-width: 800px;
     padding: 35px 30px;
     border-radius: 5px;
-    background-color: #8caecd;
+    background-color: #628ea3;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-decoration: none;
     color: white;
@@ -17,7 +17,7 @@
 
     &:hover {
         cursor: pointer;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 20px rgba(75, 182, 218, 0.3);
         transform: scale(1.02);
     }
 }
