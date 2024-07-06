@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { codeblockService } from "../services/codeblock.service";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CodeEditor } from '../cmps/codeblockdetails/CodeEditor';
 import { Smiley } from '../cmps/codeblockdetails/Smiley';
 import { SolutionBtn } from '../cmps/codeblockdetails/SolutionBtn';
 import { SolutionModal } from '../cmps/codeblockdetails/SolutionModal';
+import { RedirectModal } from '../cmps/codeblockdetails/RedirectModal';
 import { socketService, SOCKET_EVENT_JOIN_CODEBLOCK, SOCKET_EVENT_LEAVE_CODEBLOCK, SOCKET_EVENT_CODE_CHANGE, SOCKET_EVENT_CODE_UPDATE, SOCKET_REDIRECT_TO_LOBBY, SOCKET_GET_STUDENTS_COUNT, SOCKET_STUDENTS_COUNT } from '../services/socket.service';
 
 export default function CodeblockDetails() {
@@ -12,15 +13,24 @@ export default function CodeblockDetails() {
     const [isEditing, setIsEditing] = useState(false);
     const [showSmiley, setShowSmiley] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showRedirectModal, setShowRedirectModal] = useState(false);
     const [studentCount, setStudentCount] = useState(0);
+    const [userRole, setUserRole] = useState('Student');
+    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
         fetchCodeblock();
         socketService.emit(SOCKET_EVENT_JOIN_CODEBLOCK, id);
         socketService.emit(SOCKET_GET_STUDENTS_COUNT, id);
+        socketService.on('set-role', (role) => {
+            setUserRole(role);
+        });
+
         return () => {
+            socketService.emit(SOCKET_GET_STUDENTS_COUNT, id);
             socketService.emit(SOCKET_EVENT_LEAVE_CODEBLOCK, id);
+            socketService.off('set-role');
         };
     }, [id]);
 
@@ -41,7 +51,7 @@ export default function CodeblockDetails() {
 
     useEffect(() => {
         socketService.on(SOCKET_REDIRECT_TO_LOBBY, () => {
-            alert('redirecting to lobby...')
+            setShowRedirectModal(true);
         });
         return () => {
             socketService.off(SOCKET_REDIRECT_TO_LOBBY);
@@ -78,11 +88,17 @@ export default function CodeblockDetails() {
         socketService.emit(SOCKET_EVENT_CODE_CHANGE, { codeblockId: id, code: newCodeblock.code });
     }
 
+    function handleCloseRedirectModal() {
+        setShowRedirectModal(false);
+        navigate('/');
+    }
+
     return (
         <main className="container">
             <SolutionBtn onClick={() => setShowModal(true)} />
             <h1>{codeblock ? codeblock.title : 'Loading...'}</h1>
             <p>Students in room: {studentCount}</p>
+            <p>Your role: {userRole}</p>
             {codeblock && (
                 <CodeEditor
                     code={codeblock.code}
@@ -97,6 +113,9 @@ export default function CodeblockDetails() {
                     solution={codeblock.solution}
                     onClose={() => setShowModal(false)}
                 />
+            )}
+            {showRedirectModal && (
+                <RedirectModal onClose={handleCloseRedirectModal} />
             )}
         </main>
     );
