@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCodeblockById } from "../services/codeblock.service";
+import { codeblockService } from "../services/codeblock.service";
 import { useParams } from "react-router-dom";
 import { CodeEditor } from '../cmps/codeblockdetails/CodeEditor';
 import { Smiley } from '../cmps/codeblockdetails/Smiley';
@@ -33,7 +33,7 @@ export default function CodeblockDetails() {
     }, [codeblock]);
 
     async function fetchCodeblock() {
-        const codeblockData = await getCodeblockById(id);
+        const codeblockData = await codeblockService.getCodeblockById(id);
         setCodeblock(codeblockData);
     }
 

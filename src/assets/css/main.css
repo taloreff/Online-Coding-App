@@ -12,3 +12,5 @@
 @import "./cmps/app-header";
 @import "./cmps/solution-modal";
 @import "./cmps/searchbar";
+@import "./cmps/codeblock-list";
+@import "./cmps/codeblock-preview";

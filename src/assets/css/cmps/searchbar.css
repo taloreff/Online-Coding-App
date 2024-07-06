@@ -6,12 +6,20 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     width: 300px;
+
+    &:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .search-icon {
     font-size: 20px;
     color: #9fc2e2;
     margin-right: 10px;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .search-input {

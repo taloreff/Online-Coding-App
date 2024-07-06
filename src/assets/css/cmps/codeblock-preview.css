@@ -1,0 +1,23 @@
+.lobby-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 140px;
+    max-width: 800px;
+    padding: 35px 30px;
+    border-radius: 5px;
+    background-color: #8caecd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: white;
+    transition: box-shadow 0.3s, transform 0.3s;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.lobby-link:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
+}

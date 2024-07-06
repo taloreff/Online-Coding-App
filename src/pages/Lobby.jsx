@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
-import { getCodeblocks } from "../services/codeblock.service";
+import { useSearchParams } from "react-router-dom";
+import { codeblockService } from "../services/codeblock.service";
 import CodeblockList from "../cmps/lobby/CodeblockList";
 
 export default function Lobby() {
     const [codeblocks, setCodeblocks] = useState(null);
+    const [searchParams] = useSearchParams();
+    const filterBy = codeblockService.getFilterFromParams(searchParams);
 
     useEffect(() => {
-        fetchCodeblocks();
-    }, []);
+        loadCodeblocks();
+    }, [searchParams]);
 
-    const fetchCodeblocks = async () => {
-        const codeblocksData = await getCodeblocks();
+    const loadCodeblocks = async () => {
+        const codeblocksData = await codeblockService.getCodeblocks(filterBy);
         setCodeblocks(codeblocksData);
     };
-
-    // const user = {
-    //     name: "John",
-    //     socketid: "123",
-    //     id: "1234",
-    //     favorites: ["1234", "5678"],
-    //     done: ["1234"], //how long it took to solve
-    // };
-
 
     return (
         <main className="container" role="main">
