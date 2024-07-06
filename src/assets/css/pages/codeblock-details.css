@@ -1,21 +1,65 @@
-.codeblock {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 3;
-    padding: 10px 20px;
-    background-color: #282c34;
-    border-radius: 8px;
-    width: 80%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-    position: relative;
-    min-height: 500px;
+.container-grid {
+    padding: 0 100px;
+    display: grid;
+    grid-template-columns: 100px 1fr 100px;
+    grid-template-rows: 1fr 1fr 8fr;
+    align-items: center;
+    height: 100%;
+    background-color: #202529;
+    flex: 1;
+
+    &>* {
+        grid-column: 2;
+    }
+
+    .codeblock-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ddd;
+        font-weight: 500;
+        flex: 1;
+    }
+
+    .codeblock-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        color: #ddd;
+        font-weight: 500;
+        gap: 10px;
+
+        p:nth-child(2) {
+            justify-self: center;
+        }
+    }
+
+    .codeblock {
+        grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 3;
+        padding: 10px 20px;
+        background-color: #282c34;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        position: relative;
+        min-height: 500px;
+        outline: none;
+
+        &.editing {
+            border: 1px solid rgb(82, 186, 82);
+        }
+    }
 }
 
+
+
 .button-container {
-    align-self: flex-start;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    justify-self: end;
+    align-items: center;
 }
 
 .solution-button {
@@ -62,41 +106,18 @@
     word-wrap: break-word;
 }
 
-.smiley {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    animation: fadeInBounce 2.5s ease-in-out infinite;
-}
+@media screen and (max-width: 768px) {
+    .container-grid {
+        grid-template-columns: 1fr;
+        padding: 0 70px;
 
-@keyframes fadeInBounce {
-    0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(0.8);
+        &>* {
+            grid-column: 1;
+        }
+
+        & section {
+            max-width: 500px;
+        }
     }
 
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-
-    70% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    90% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
 }

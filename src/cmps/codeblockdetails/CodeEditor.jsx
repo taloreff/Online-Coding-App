@@ -1,22 +1,15 @@
 import React from 'react';
+import Editor from '@monaco-editor/react';
 
-export function CodeEditor({ code, isEditing, onCodeChange, onSetIsEditing }) {
-
+export function CodeEditor({ code, onCodeChange }) {
     return (
-        <section className={`codeblock ${isEditing ? 'focused' : ''}`} onClick={onSetIsEditing}>
-            {isEditing ? (
-                <textarea
-                    value={code}
-                    onChange={onCodeChange}
-                    className="code-textarea"
-                />
-            ) : (
-                <pre>
-                    <code className="javascript">
-                        {code}
-                    </code>
-                </pre>
-            )}
-        </section>
+        <Editor
+            className='code-editor'
+            defaultLanguage="javascript"
+            value={code}
+            theme="vs-dark"
+            minimap={{ enabled: false }}
+            onChange={onCodeChange}
+        />
     );
 }

@@ -10,28 +10,28 @@
     &:hover {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-}
 
-.search-icon {
-    font-size: 20px;
-    color: #9fc2e2;
-    margin-right: 10px;
+    .search-icon {
+        font-size: 20px;
+        color: #9fc2e2;
+        margin-right: 10px;
 
-    &:hover {
-        cursor: pointer;
+        &:hover {
+            cursor: pointer;
+        }
     }
-}
 
-.search-input {
-    border: none;
-    outline: none;
-    background: none;
-    width: 100%;
-    font-size: 16px;
-    color: #9fc2e2;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+    .search-input {
+        border: none;
+        outline: none;
+        background: none;
+        width: 100%;
+        font-size: 16px;
+        color: #9fc2e2;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-.search-input::placeholder {
-    color: #9fc2e2;
+        &::placeholder {
+            color: #9fc2e2;
+        }
+    }
 }

@@ -1,0 +1,23 @@
+.code-editor {
+    outline: none;
+    border-radius: 20px;
+    margin-bottom: 30px;
+
+    .monaco-editor {
+        padding-top: 20px;
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 20px;
+
+        .overflow-guard {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 20px;
+
+            &:first-child {
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+    }
+}

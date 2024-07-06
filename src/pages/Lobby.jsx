@@ -18,7 +18,7 @@ export default function Lobby() {
     };
 
     return (
-        <main className="container" role="main">
+        <main className="container-flex" role="main">
             <h1>Choose code block</h1>
             <CodeblockList codeblocks={codeblocks} />
         </main>
