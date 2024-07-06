@@ -5,6 +5,7 @@ import { CodeEditor } from '../cmps/codeblockdetails/CodeEditor';
 import { Smiley } from '../cmps/codeblockdetails/Smiley';
 import { SolutionBtn } from '../cmps/codeblockdetails/SolutionBtn';
 import { SolutionModal } from '../cmps/codeblockdetails/SolutionModal';
+import { socketService, SOCKET_EVENT_JOIN_CODEBLOCK, SOCKET_EVENT_LEAVE_CODEBLOCK, SOCKET_EVENT_CODE_CHANGE, SOCKET_EVENT_CODE_UPDATE, SOCKET_REDIRECT_TO_LOBBY } from '../services/socket.service';
 
 export default function CodeblockDetails() {
     const [codeblock, setCodeblock] = useState(null);
@@ -15,6 +16,10 @@ export default function CodeblockDetails() {
 
     useEffect(() => {
         fetchCodeblock();
+        socketService.emit(SOCKET_EVENT_JOIN_CODEBLOCK, id);
+        return () => {
+            socketService.emit(SOCKET_EVENT_LEAVE_CODEBLOCK, id);
+        };
     }, [id]);
 
     useEffect(() => {
@@ -32,6 +37,24 @@ export default function CodeblockDetails() {
         }
     }, [codeblock]);
 
+    useEffect(() => {
+        socketService.on(SOCKET_REDIRECT_TO_LOBBY, () => {
+            alert('redirecting to lobby...')
+        });
+        return () => {
+            socketService.off(SOCKET_REDIRECT_TO_LOBBY);
+        };
+    }, []);
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_CODE_UPDATE, (code) => {
+            setCodeblock(prev => ({ ...prev, code }));
+        });
+        return () => {
+            socketService.off(SOCKET_EVENT_CODE_UPDATE);
+        };
+    }, []);
+
     async function fetchCodeblock() {
         const codeblockData = await codeblockService.getCodeblockById(id);
         setCodeblock(codeblockData);
@@ -41,6 +64,7 @@ export default function CodeblockDetails() {
         const newCodeblock = { ...codeblock };
         newCodeblock.code = ev.target.value;
         setCodeblock(newCodeblock);
+        socketService.emit(SOCKET_EVENT_CODE_CHANGE, { codeblockId: id, code: newCodeblock.code });
     }
 
     return (
