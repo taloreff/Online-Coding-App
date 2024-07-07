@@ -1,19 +1,19 @@
 .search-container {
     display: flex;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: var(--clr-offwhite);
     border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-search);
     padding: 10px 20px;
     width: 300px;
 
     &:hover {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-search-hover)
     }
 
     .search-icon {
         font-size: 20px;
-        color: #9fc2e2;
+        color: var(--clr-secondary);
         margin-right: 10px;
 
         &:hover {
@@ -27,11 +27,11 @@
         background: none;
         width: 100%;
         font-size: 16px;
-        color: #9fc2e2;
+        color: var(--clr-secondary);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
         &::placeholder {
-            color: #9fc2e2;
+            color: var(--clr-secondary);
         }
     }
 }
