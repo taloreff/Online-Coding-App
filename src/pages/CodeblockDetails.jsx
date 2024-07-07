@@ -19,20 +19,24 @@ export default function CodeblockDetails() {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    // Custom hook for handling socket events
     const { userRole, studentCount, showRedirectModal, emitCodeChange, setShowRedirectModal } = useCodeblockSocket(id);
 
     useEffect(() => {
         loadCodeblock();
 
+        // Subscribe to code update events
         const handleCodeUpdate = (code) => setCodeblock(prev => ({ ...prev, code }));
         socketService.on(SOCKET_EVENT_CODE_UPDATE, handleCodeUpdate);
 
+        // Cleanup subscription on component unmount
         return () => {
             socketService.off(SOCKET_EVENT_CODE_UPDATE, handleCodeUpdate);
         };
     }, [id]);
 
     useEffect(() => {
+        // Event listener to remove smiley on document click
         document.addEventListener('click', removeSmiley);
 
         return () => {
@@ -70,10 +74,10 @@ export default function CodeblockDetails() {
         <main className="container-grid">
             {codeblock && (
                 <>
-                    <h1 className="codeblock-title">{codeblock?.title}</h1>
+                    <h1 className="codeblock-title" aria-live="polite">{codeblock?.title}</h1>
                     <div className="codeblock-details">
-                        <p>Students in room: {studentCount}</p>
-                        <p>Your role: {userRole}</p>
+                        <p aria-live="polite">Students in room: {studentCount}</p>
+                        <p aria-live="polite">Your role: {userRole}</p>
                         <SolutionBtn onClick={() => setShowModal(true)} />
                     </div>
                     <CodeEditor

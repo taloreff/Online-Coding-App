@@ -10,9 +10,7 @@ export const SOCKET_GET_STUDENTS_COUNT = 'get-students-count'
 export const SOCKET_STUDENTS_COUNT = 'students-count'
 export const SOCKET_EVENT_SET_ROLE = 'set-role';
 
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/codeblocks'
-    : '//localhost:5000';
+const BASE_URL = (process.env.NODE_ENV === 'production') ? '' : '//localhost:5000'
 
 export const socketService = createSocketService()
 

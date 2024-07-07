@@ -8,11 +8,13 @@ export default function SearchBar() {
     const defaultFilter = codeblockService.getDefaultFilter();
     const [searchParams] = useSearchParams(defaultFilter);
 
+    // Function to update search parameters and navigate to filtered results
     function onSubmitFilter() {
         const newSearchParams = codeblockService.updateSearchParams(searchParams, { key: 'title', value: searchQuery });
         navigate({ search: newSearchParams.toString() });
     }
 
+    // Handle Enter key press to trigger the search
     function handleEnterKey(e) {
         if (e.key === 'Enter') {
             onSubmitFilter();
