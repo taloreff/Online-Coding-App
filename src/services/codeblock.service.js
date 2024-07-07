@@ -1,28 +1,37 @@
 import axios from 'axios';
+import { httpService } from './http.service';
 
 // eslint-disable-next-line no-undef
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/codeblocks'
-    : '//localhost:5000/api/codeblocks';
+const BASE_URL = "codeblocks/";
 
-async function getCodeblocks(filterBy) {
-    try {
-        const response = await axios.get(BASE_URL, { params: filterBy });
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching codeblocks:', error);
-        throw error;
-    }
+
+// async function getCodeblocks(filterBy) {
+//     try {
+//         const response = await axios.get(BASE_URL, { params: filterBy });
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error fetching codeblocks:', error);
+//         throw error;
+//     }
+// }
+
+async function query(filterBy) {
+    return httpService.get(BASE_URL, filterBy)
 }
 
-async function getCodeblockById(codeblockId) {
-    try {
-        const response = await axios.get(`${BASE_URL}/${codeblockId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching codeblock:', error);
-        throw error;
-    }
+// async function getCodeblockById(codeblockId) {
+//     try {
+//         const response = await axios.get(`${BASE_URL}/${codeblockId}`);
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error fetching codeblock:', error);
+//         throw error;
+//     }
+// }
+
+async function getById(codeblockId) {
+    const stay = await httpService.get(`${BASE_URL}${codeblockId}`)
+    return stay
 }
 
 function getDefaultFilter() {
@@ -57,8 +66,8 @@ function updateSearchParams(searchParams, paramToAppend) {
 }
 
 export const codeblockService = {
-    getCodeblocks,
-    getCodeblockById,
+    query,
+    getById,
     getDefaultFilter,
     getFilterFromParams,
     updateSearchParams

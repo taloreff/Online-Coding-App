@@ -13,7 +13,7 @@ export default function Lobby() {
     }, [searchParams]);
 
     const loadCodeblocks = async () => {
-        const codeblocksData = await codeblockService.getCodeblocks(filterBy);
+        const codeblocksData = await codeblockService.query(filterBy);
         setCodeblocks(codeblocksData);
     };
 

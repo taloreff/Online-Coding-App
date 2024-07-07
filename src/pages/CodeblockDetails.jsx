@@ -7,7 +7,6 @@ import { Smiley } from '../cmps/codeblockdetails/Smiley';
 import { SolutionBtn } from '../cmps/codeblockdetails/SolutionBtn';
 import { SolutionModal } from '../cmps/codeblockdetails/SolutionModal';
 import { RedirectModal } from '../cmps/codeblockdetails/RedirectModal';
-import { DotLoader } from "react-spinners";
 
 import { codeblockService } from "../services/codeblock.service";
 import { socketService } from "../services/socket.service";
@@ -17,7 +16,6 @@ export default function CodeblockDetails() {
     const [codeblock, setCodeblock] = useState(null);
     const [showSmiley, setShowSmiley] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -49,10 +47,8 @@ export default function CodeblockDetails() {
     }, [codeblock]);
 
     async function loadCodeblock() {
-        setIsLoading(true);
-        const codeblockData = await codeblockService.getCodeblockById(id);
+        const codeblockData = await codeblockService.getById(id);
         setCodeblock(codeblockData);
-        setIsLoading(false);
     }
 
     function handleCodeChange(newCode) {
@@ -72,17 +68,7 @@ export default function CodeblockDetails() {
 
     return (
         <main className="container-grid">
-            {isLoading ? (
-                <div className="loader-container">
-                    <DotLoader
-                        color={"#628ea3"}
-                        loading={isLoading}
-                        size={50}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    />
-                </div>
-            ) : (
+            {codeblock && (
                 <>
                     <h1 className="codeblock-title">{codeblock?.title}</h1>
                     <div className="codeblock-details">
@@ -90,27 +76,23 @@ export default function CodeblockDetails() {
                         <p>Your role: {userRole}</p>
                         <SolutionBtn onClick={() => setShowModal(true)} />
                     </div>
-                    {codeblock && (
-                        <CodeEditor
-                            code={codeblock.code}
-                            onCodeChange={handleCodeChange}
-                            role={userRole}
-                        />
-                    )}
-                    {showSmiley && <Smiley />}
-                    {showModal && (
-                        <SolutionModal
-                            solution={codeblock.solution}
-                            onClose={() => setShowModal(false)}
-                        />
-                    )}
-                    {showRedirectModal && (
-                        <RedirectModal onClose={handleCloseRedirectModal} />
-                    )}
+                    <CodeEditor
+                        code={codeblock.code}
+                        onCodeChange={handleCodeChange}
+                        role={userRole}
+                    />
                 </>
+            )}
+            {showSmiley && <Smiley />}
+            {showModal && (
+                <SolutionModal
+                    solution={codeblock.solution}
+                    onClose={() => setShowModal(false)}
+                />
+            )}
+            {showRedirectModal && (
+                <RedirectModal onClose={handleCloseRedirectModal} />
             )}
         </main>
     );
 }
-
-

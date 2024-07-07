@@ -25,7 +25,6 @@ function createSocketService() {
             socket = io(BASE_URL)
         },
         on(eventName, cb) {
-            console.log(eventName)
             socket.on(eventName, cb)
         },
         off(eventName, cb = null) {
