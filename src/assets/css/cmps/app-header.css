@@ -20,10 +20,6 @@
         grid-column: 2;
         justify-self: center;
         width: 100%;
-
-        .search-container {
-            width: 100%;
-        }
     }
 }
 

@@ -9,29 +9,26 @@ export default function SearchBar() {
     const [searchParams] = useSearchParams(defaultFilter);
 
     // Function to update search parameters and navigate to filtered results
-    function onSubmitFilter() {
+    function onSubmitFilter(e) {
+        e.preventDefault();
         const newSearchParams = codeblockService.updateSearchParams(searchParams, { key: 'title', value: searchQuery });
         navigate({ search: newSearchParams.toString() });
-    }
-
-    // Handle Enter key press to trigger the search
-    function handleEnterKey(e) {
-        if (e.key === 'Enter') {
-            onSubmitFilter();
-        }
+        setSearchQuery("");
     }
 
     return (
         <div className="search-container">
-            <i className="fas fa-search search-icon" onClick={onSubmitFilter}></i>
-            <input
-                type="text"
-                placeholder="Search..."
-                className="search-input"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={handleEnterKey}
-            />
+            <form onSubmit={(e) => onSubmitFilter(e)}>
+                <button className='search-btn'><i className="fas fa-search search-icon" ></i></button>
+                <input
+                    type="search"
+                    placeholder="Search..."
+                    autoComplete='true'
+                    className="search-input"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </form>
         </div>
     );
 }
